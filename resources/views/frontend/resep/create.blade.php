@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                                <button type="submit" class="site-btn">TAMBAH RESEP</button>
                             </div>
                         </div>
                     </div>
