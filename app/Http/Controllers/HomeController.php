@@ -25,8 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $reseps = Resep::all();
-        $artikels = Artikel::all(); 
+        $reseps = Resep::paginate(6);;
+        $artikels = Artikel::paginate(2);
         $leaderbord = Resep::orderBy('sukai', 'DESC')->take(3)->get();
         return view('frontend.index',compact('reseps','artikels','leaderbord'));
     }

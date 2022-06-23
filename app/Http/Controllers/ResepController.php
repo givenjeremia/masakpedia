@@ -17,10 +17,11 @@ class ResepController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $reseps = Resep::all();
+        $cari = !empty($request->get('cari'))  ? $request->get('cari') : ''; 
+        $reseps = Resep::where('nama', 'LIKE', '%'.$cari.'%')->paginate(6);
         return view('frontend.resep.index',compact('reseps'));
     }
 
@@ -78,7 +79,7 @@ class ResepController extends Controller
                 
             }
         }
-        return redirect()->route('myresep')->with('status', 'Success Create '.$request->get('judul').' Resep' );
+        return redirect()->route('my_resep.index')->with('status', 'Success Create '.$request->get('judul').' Resep' );
 
         // dd($request->get('bahan'));
     }
