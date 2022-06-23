@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bahan;
 use App\Resep;
 use App\Langkah;
+use App\UserAktivitasResep;
 use App\KategoriAsalMasakan;
 use Illuminate\Http\Request;
 use App\KategoriJenisMasakan;
@@ -20,9 +21,10 @@ class ResepController extends Controller
     public function index(Request $request)
     {
         //
+        $userAktivitasResep = Useraktivitasresep::all();
         $cari = !empty($request->get('cari'))  ? $request->get('cari') : ''; 
         $reseps = Resep::where('nama', 'LIKE', '%'.$cari.'%')->paginate(6);
-        return view('frontend.resep.index',compact('reseps'));
+        return view('frontend.resep.index',compact('reseps','userAktivitasResep'));
     }
 
     /**
@@ -127,22 +129,67 @@ class ResepController extends Controller
      * @param  \App\Resep  $resep
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resep $resep)
+    public function destroy($resep)
     {
         //
+        $resep = Resep::find($resep);
+      
+        $this->authorize('resep-permission',$resep);
+        // dd($resep);
+        // $bahan->delete();
+        
+        try {
+            $bahan = Bahan::whereIn('resep_id',$resep)->delete();
+            $langkah = Langkah::whereIn('resep_id',$resep)->delete();
+            // foreach($bahan as $item) {
+            //     $item->delete();
+            // }
+            
+            // foreach($langkah as $item) {
+            //     $item->delete();
+            // }
+            // $bahan->delete();
+            // $langkah->delete();
+            $resep->delete();
+            return redirect()->route('my_resep.index')->with('status', 'Success Delete Resep' );  
+        } catch (\Throwable $th) {
+            $msg = "Resep Gagal Di Hapus. Pastikan Data Child SUdah Hilang Atau Tidak Behubungan";
+            return redirect()->route('my_resep.index')->with('status', 'Error '.$msg );  
+        }
     }
 
     public function myResep()
     {
         $this->authorize('resep-permission');
-
+        $userAktivitasResep = Useraktivitasresep::all();
         $user = Auth::user();
         // dd($user->id);
-        $reseps = Resep::where('user_id', $user->id)->get();
+        $reseps = Resep::where('user_id', $user->id)->paginate(6);
         // dd($reseps);
-        return view('frontend.resep.index',compact('reseps'));
+        
+        return view('frontend.resep.index',compact('reseps','userAktivitasResep'));
 
     }
+
+    public function sukai($id)
+    {
+        // $this->authorize('resep-permission');
+        $user = Auth::user();
+        $userAktivitasResep = new UserAktivitasResep();
+        $userAktivitasResep->user_id = $user->id;
+        $userAktivitasResep->resep_id = $id;
+        $userAktivitasResep->suka = '1';
+        $userAktivitasResep->save();
+        //Update Jumlah Suka
+        $resep = Resep::find($id);
+        $jum_suka = $resep->sukai;
+        $resep->sukai = $jum_suka+1;
+        $resep->save();
+        return redirect()->route('my_resep.index')->with('status', 'Success Sukai Resep' ); 
+
+    }
+
+
 
     
 

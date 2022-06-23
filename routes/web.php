@@ -17,11 +17,19 @@ Route::get('/', 'HomeController@index');
 
 Route::resource('/resep', 'ResepController');
 Route::resource('/artikel', 'ArtikelController');
+Route::resource('/kategori', 'KategoriController');
+Route::get('/kategori/Asal/{id}', 'KategoriController@asal')->name('kategori.asal');;
+Route::get('/kategori/Jenis/{id}', 'KategoriController@jenis');
+Route::get('/kategori/display/{from}/{id}', 'KategoriController@display');
+
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/myresep', 'ResepController@myresep');
+    Route::get('/myresep/sukai/{id}', 'ResepController@sukai');
+
     Route::resource('my_resep', 'ResepController');
     Route::resource('myartikel', 'ArtikelController');
+
 });
 
 Auth::routes();
