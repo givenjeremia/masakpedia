@@ -37,7 +37,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="{{ asset('frontend/img/logo.png') }}" alt=""></a>
+            <a href="#"><img src="{{ asset('img/Logo.png') }}" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -148,7 +148,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="/"><img src="{{ asset('frontend/img/logo.png') }}" alt=""></a>
+                        <a href="/"><img src="{{ asset('img/Logo.png') }}" width="70%"alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -161,7 +161,7 @@
                                     <li><a href="/TambahResep">Tambah Resep</a></li>
                                 </ul> --}}
                             </li>
-                            <li><a href="">Kategori</a></li>
+                            <li><a href="/kategori">Kategori</a></li>
                             <li><a href="/artikel">Artikel</a></li>
                             <!-- <li><a href="./contact.html">Contact</a></li> -->
                             @if (Auth::user())
@@ -177,8 +177,8 @@
                             @else
                             <li><a href="/myresep">My Artikel</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="/resep">My Artikel</a></li>
-                                    <li><a href="/TambahResep">New Artikel</a></li>
+                                    <li><a href="/myartikel">My Artikel</a></li>
+                                    <li><a href="/myartikel/create">New Artikel</a></li>
                                 </ul>
                             </li>
                                 
