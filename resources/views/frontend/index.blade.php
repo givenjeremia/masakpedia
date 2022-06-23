@@ -157,25 +157,7 @@
                 </div>
                 <section class="blog spad">
                     <div class="container">
-                        <div class="row">
-                            @foreach($artikels as $a)
-                            {{-- <div class="col-lg-6 col-md-6 col-sm-6"> --}}
-                                <div class="blog__item">
-                                    <div class="blog__item__pic">
-                                        <img src="{{ $a -> url_gambar }}" alt="">
-                                    </div>
-                                    <div class="blog__item__text">
-                                        <ul>
-                                            <li><i class="fa fa-user-o"></i> Admin</li>
-                                        </ul>
-                                        <h5><a href="#">{{ $a -> judul }}</a></h5>
-                                        <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
-                                    </div>
-                                </div>
-                                {{--
-                            </div> --}}
-                            @endforeach
-                        </div>
+                        @include('frontend.page_artikel')
                     </div>
                 </section>
             </div>
@@ -184,24 +166,8 @@
                 <div class="section-title related__product__title">
                     <h2>Resep</h2>
                 </div>
-                <div class="row">
-                    @foreach($reseps as $r)
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{ $r -> url_gambar }}">
-                                <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="{{ route('resep.show', $r->id) }}">{{ $r -> nama }}</a></h6>
-                                <h5><i class="fa fa-heart"></i> {{ $r -> sukai }}&nbsp;&nbsp;<i
-                                        class="fa fa-comment-o"></i> 5</h5>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
+                @include('frontend.page_resep')
+                
             </div>
         </div>
     </div>
